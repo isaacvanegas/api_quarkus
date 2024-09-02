@@ -7,7 +7,6 @@ import org.slf4j.MDC;
 
 @Dependent
 public class OperationAccessLogger {
-
     private static final Logger LOG = LoggerFactory.getLogger("API_SERVICE_ACCESS");
 
     public void logRequest(String transactionId, String operation) {

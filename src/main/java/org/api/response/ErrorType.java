@@ -34,6 +34,10 @@ public class ErrorType implements Serializable, ModelObject {
         return new ErrorType("0", "Respuesta correcta");
     }
 
+    public static ErrorType ok(String msg) {
+        return new ErrorType("0", msg);
+    }
+
 
     public static ErrorType unauthorizedGenerateJWT(String msg) {
         return new ErrorType("UGJWT", msg);

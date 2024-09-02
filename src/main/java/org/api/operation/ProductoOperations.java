@@ -1,7 +1,9 @@
 package org.api.operation;
 
+import io.vertx.mutiny.core.eventbus.Message;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
+import org.api.DTO.ProductoReponseOperation;
 import org.api.builder.ProductoBuilder;
 import org.api.entity.ContextData;
 import org.api.entity.catalogo.Producto;
@@ -49,27 +51,32 @@ public class ProductoOperations {
         return productoBuilder.buildResponse(operation(request));
     }
 
-    private List<Producto> operation(ProductoReques request) {
+    private ProductoReponseOperation operation(ProductoReques request) {
         List<Producto> lp = new ArrayList<>();
-        Producto p = setProdcuto( request);
+        String message ="";
+        Producto p = setProdcuto(request,request.getAcciones().getGuardar());
 
         if (request.getAcciones().getGuardar()) {
             lp.add(productoService.save(p));
+            message="Guardado con éxito";
         } else if (request.getAcciones().getActualizar()) {
            lp.add(productoService.update(p));
+            message="Actualizado con éxito";
         } else if (request.getAcciones().getEliminar() && productoService.delete(p)){
-            lp.add(p);
+            message="Eliminado con éxito";
         }
         else {
             lp = productoService.getProductos(request.getProductoDto().getId());
         }
 
-        return lp;
+        return new ProductoReponseOperation(lp,message);
     }
 
-    private Producto setProdcuto(ProductoReques request) {
+    private Producto setProdcuto(ProductoReques request,Boolean guardar) {
         Producto p = new Producto();
-        p.setId(request.getProductoDto().getId());
+        if(!guardar){
+            p.setId(request.getProductoDto().getId());
+        }
         p.setNombre(request.getProductoDto().getNombre());
         p.setPrecio(request.getProductoDto().getPrecio());
         return p;

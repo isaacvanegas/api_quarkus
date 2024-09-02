@@ -7,17 +7,17 @@ import jakarta.inject.Inject;
 public class OperationsManagerCore implements OperationsManager {
 
 
-    private final InspeccionesOperations inspeccionesOperations;
+    private final ProductoOperations productoOperations;
 
 
     @Inject
-    public OperationsManagerCore(InspeccionesOperations inspeccionesOperations) {
-        this.inspeccionesOperations = inspeccionesOperations;
+    public OperationsManagerCore(ProductoOperations productoOperations) {
+        this.productoOperations = productoOperations;
     }
 
 
     @Override
-    public InspeccionesOperations getAppVersion() {
-        return inspeccionesOperations;
+    public ProductoOperations productoOperations() {
+        return productoOperations;
     }
 }

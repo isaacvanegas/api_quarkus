@@ -12,8 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "producto", schema = "catalogo")
 public class Producto {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "produto_id_gen")
-    @SequenceGenerator(name = "produto_id_gen", sequenceName = "produto_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -21,6 +20,6 @@ public class Producto {
     private String nombre;
 
     @Column(name = "precio", precision = 16, scale = 2)
-    private Double precio;
+    private BigDecimal precio;
 
 }

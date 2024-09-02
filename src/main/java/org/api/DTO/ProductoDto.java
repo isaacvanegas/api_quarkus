@@ -21,7 +21,7 @@ public class ProductoDto implements Serializable {
     @Schema(description = "Nombre del producto", example = "Totames")
     String nombre;
     @Schema(description = "Precio", example = "2.50")
-    Double precio;
+    BigDecimal precio;
 
     public ProductoDto() {}
 
@@ -41,7 +41,7 @@ public class ProductoDto implements Serializable {
         return this;
     }
 
-    public ProductoDto withPrecio(Double precio) {
+    public ProductoDto withPrecio(BigDecimal precio) {
         this.precio = precio;
         return this;
     }

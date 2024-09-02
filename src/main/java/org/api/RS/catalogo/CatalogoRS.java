@@ -2,19 +2,16 @@ package org.api.RS.catalogo;
 
 import io.quarkus.vertx.http.Compressed;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import org.api.entity.ContextData;
 import org.api.operation.OperationsManager;
-import org.api.request.RQ.AuthenticationRequestRQ;
 import org.api.request.RQ.ProductoRequesRQ;
-import org.api.request.authentication.AuthenticationRequestDto;
 import org.api.request.catalogo.ProductoReques;
 import org.api.response.ResponseErrors;
-import org.api.response.authentication.AuthenticationResponse;
 import org.api.response.catalogo.ProductoResponse;
 import org.api.util.logger.OperationAccessLogger;
 import org.api.util.logger.TimesLogger;
@@ -55,17 +52,17 @@ public class CatalogoRS {
     OperationsManager operationsManager;
 
     @POST
-    @PermitAll
+    @RolesAllowed("admin")
     @Compressed
-    @Path("/getAppVersion")
+    @Path("/productoOperation")
     @Operation(
-            operationId = "getAppVersion",
-            summary = "App Version",
-            description = "Verificación de la version de la applicación movil inspecciones offline."
+            operationId = "productoOperation",
+            summary = "operaciones de producto",
+            description = "Realiza el crud basico para la tabla productos."
     )
     @APIResponse(
             responseCode = "200",
-            description = "Informacion de confirmacion de acciones y lista de productos."
+            description = "Operación realizada con éxito."
     )
     public ProductoResponse productoOperation(
             @RequestBody(

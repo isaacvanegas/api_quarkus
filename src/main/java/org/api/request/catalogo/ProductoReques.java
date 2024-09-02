@@ -15,10 +15,10 @@ import java.io.Serializable;
 public class ProductoReques implements Request, Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "Objeto producto", example = "{1,tomate,1,50}")
+    @Schema(description = "Objeto producto",  example = "{\"id\": 1, \"nombre\": \"Tomate\", \"precio\": 1.99}")
     ProductoDto productoDto ;
 
-    @Schema(description = "Acciones a realizar", example = "guardar=true")
+    @Schema(description = "Acciones a realizar", example = "{\"guardar\": false, \"eliminar\": false,\"actualizar\": false}" )
     Acciones acciones;
 
     public ProductoReques() {}

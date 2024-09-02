@@ -20,10 +20,11 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     public List<Producto> getProductos(Integer id){
-        if (id==null){
-            return  userRepository.list("id", id);
-        } else{
+        if (id==null || id==0){
             return userRepository.listAll();
+        } else{
+
+            return  userRepository.list("id", id);
         }
     }
 
@@ -33,14 +34,21 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     public Producto update(Producto p){
-        userRepository.persist(p);
+        Producto pr = this.getProductos(p.getId()).getFirst();
+        if(pr!=null){
+            pr.setNombre(p.getNombre());
+            pr.setPrecio(p.getPrecio());
+            userRepository.persist(pr);
+            return pr;
+        }
+
         return p;
     }
 
     public Boolean delete(Producto p){
-
-        if(userRepository.isPersistent(p)){
-            userRepository.delete(p);
+        Producto pr = this.getProductos(p.getId()).getFirst();
+        if(userRepository.isPersistent(pr)){
+            userRepository.delete(pr);
             return true;
         }
         return false;

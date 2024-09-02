@@ -35,6 +35,11 @@ public class ProductoResponse implements ResponseErrors, Serializable {
         return this;
     }
 
+    public ProductoResponse withError(List<ErrorType> error) {
+        this.error = error;
+        return this;
+    }
+
     @Override
     public List<ErrorType> getError() {
         if (error == null) {

@@ -2,11 +2,15 @@ package org.api.builder;
 
 import jakarta.enterprise.context.Dependent;
 import org.api.DTO.ProductoDto;
+import org.api.DTO.ProductoReponseOperation;
 import org.api.entity.catalogo.Producto;
-import org.api.request.catalogo.ProductoReques;
+import org.api.response.ErrorType;
 import org.api.response.catalogo.ProductoResponse;
 
 import java.util.List;
+
+import static org.api.response.ErrorType.ok;
+import static org.api.response.ErrorType.unauthorizedGenerateJWT;
 
 @Dependent
 public class ProductoBuilder {
@@ -31,10 +35,13 @@ public class ProductoBuilder {
                 .toList();
     }
 
-    public ProductoResponse buildResponse(List<Producto> listProduct){
-        if (listProduct==null) {
+    public ProductoResponse buildResponse(ProductoReponseOperation response){
+        if (response.getProductos()==null) {
             return null;
         }
-        return new ProductoResponse().withProductos(this.buildList(listProduct)) ;
+
+        return new ProductoResponse()
+                .withProductos(this.buildList(response.getProductos()))
+                .withError(List.of((ErrorType) ok(response.getMessage())));
     }
 }
